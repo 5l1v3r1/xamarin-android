@@ -69,7 +69,7 @@ JNI_OnLoad ([[maybe_unused]] JavaVM *vm, [[maybe_unused]] void *reserved)
 JNIEXPORT void JNICALL
 Java_mono_android_DebugRuntime_init (JNIEnv *env, [[maybe_unused]] jclass klass, jobjectArray runtimeApksJava,
                                      jstring runtimeNativeLibDir, jobjectArray appDirs,
-                                     jobjectArray externalStorageDirs, jint androidApiLevel,
+                                     jint androidApiLevel,
                                      jboolean embeddedDSOsEnabled)
 {
 	androidSystem.set_embedded_dso_mode_enabled ((bool) embeddedDSOsEnabled);

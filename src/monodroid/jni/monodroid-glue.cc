@@ -1421,8 +1421,8 @@ MonodroidRuntime::typemap_managed_to_java (MonoReflectionType *type, const uint8
 inline void
 MonodroidRuntime::Java_mono_android_Runtime_initInternal (JNIEnv *env, jclass klass, jstring lang, jobjectArray runtimeApksJava,
                                                           jstring runtimeNativeLibDir, jobjectArray appDirs, jobject loader,
-                                                          [[maybe_unused]] jobjectArray externalStorageDirs, jobjectArray assembliesJava,
-                                                          jint apiLevel, jboolean embeddedDSOsEnabled, jboolean isEmulator)
+                                                          jobjectArray assembliesJava, jint apiLevel, jboolean embeddedDSOsEnabled,
+														  jboolean isEmulator)
 {
 	init_logging_categories ();
 
@@ -1615,7 +1615,6 @@ Java_mono_android_Runtime_init (JNIEnv *env, jclass klass, jstring lang, jobject
 		runtimeNativeLibDir,
 		appDirs,
 		loader,
-		externalStorageDirs,
 		assembliesJava,
 		apiLevel,
 		/* embeddedDSOsEnabled */ JNI_FALSE,
@@ -1626,8 +1625,8 @@ Java_mono_android_Runtime_init (JNIEnv *env, jclass klass, jstring lang, jobject
 JNIEXPORT void JNICALL
 Java_mono_android_Runtime_initInternal (JNIEnv *env, jclass klass, jstring lang, jobjectArray runtimeApksJava,
                                 jstring runtimeNativeLibDir, jobjectArray appDirs, jobject loader,
-                                jobjectArray externalStorageDirs, jobjectArray assembliesJava,
-                                jint apiLevel, jboolean embeddedDSOsEnabled, jboolean isEmulator)
+                                jobjectArray assembliesJava, jint apiLevel, jboolean embeddedDSOsEnabled,
+								jboolean isEmulator)
 {
 	monodroidRuntime.Java_mono_android_Runtime_initInternal (
 		env,
@@ -1637,7 +1636,6 @@ Java_mono_android_Runtime_initInternal (JNIEnv *env, jclass klass, jstring lang,
 		runtimeNativeLibDir,
 		appDirs,
 		loader,
-		externalStorageDirs,
 		assembliesJava,
 		apiLevel,
 		embeddedDSOsEnabled,
