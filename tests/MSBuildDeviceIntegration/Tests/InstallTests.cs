@@ -118,7 +118,9 @@ namespace Xamarin.Android.Build.Tests
 				Assert.Ignore ("Test Skipped no devices or emulators found.");
 			}
 
-			var proj = new XamarinAndroidApplicationProject ();
+			var proj = new XamarinAndroidApplicationProject () {
+				PackageName = "com.xamarin.keytest"
+			};
 			var abis = new string [] { "armeabi-v7a", "x86" };
 			proj.SetProperty (KnownProperties.AndroidSupportedAbis, string.Join (";", abis));
 			using (var builder = CreateApkBuilder ()) {
