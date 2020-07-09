@@ -125,7 +125,6 @@ namespace Xamarin.Android.Build.Tests
 				// Disable fast deployment for aabs, because we give:
 				//	XA0119: Using Fast Deployment and Android App Bundles at the same time is not recommended.
 				proj.EmbedAssembliesIntoApk = true;
-				proj.AndroidUseSharedRuntime = false;
 			}
 			proj.SetProperty ("XamarinAndroidSupportSkipVerifyVersions", "True"); // Disables API 29 warning in Xamarin.Build.Download
 			proj.SetProperty ("AndroidPackageFormat", packageFormat);
@@ -2842,7 +2841,6 @@ AAMMAAABzYW1wbGUvSGVsbG8uY2xhc3NQSwUGAAAAAAMAAwC9AAAA1gEAAAAA") });
 		{
 			var proj = new XamarinAndroidApplicationProject {
 				EmbedAssembliesIntoApk = true,
-				AndroidUseSharedRuntime = false,
 			};
 			proj.SetProperty (proj.ActiveConfigurationProperties, "DebugType", "portable");
 			using (var b = CreateApkBuilder ("temp/BuildBasicApplicationCheckPdb", false, false)) {
@@ -3789,7 +3787,6 @@ AAAAAAAAAAAAPQAAAE1FVEEtSU5GL01BTklGRVNULk1GUEsBAhQAFAAICAgAJZFnS7uHtAn+AQAA
 		public void FastDeploymentDoesNotAddContentProvider ()
 		{
 			var proj = new XamarinAndroidApplicationProject {
-				AndroidUseSharedRuntime = true,
 				EmbedAssembliesIntoApk = false,
 			};
 			proj.SetProperty ("_XASupportsFastDev", "True");

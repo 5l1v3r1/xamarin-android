@@ -220,7 +220,7 @@ Copyright (C) 2011-2012 Xamarin. All rights reserved.
 	>False</AndroidUseDebugRuntime>
 	<AndroidUseDebugRuntime Condition="'$(AndroidUseDebugRuntime)' == ''" >True</AndroidUseDebugRuntime>
 
-	<MonoSymbolArchive Condition=" '$(MonoSymbolArchive)' == '' And '$(AndroidUseSharedRuntime)' == 'False' And '$(EmbedAssembliesIntoApk)' == 'True' And '$(DebugSymbols)' == 'True' And '$(Optimize)' == 'True'" >True</MonoSymbolArchive>
+	<MonoSymbolArchive Condition=" '$(MonoSymbolArchive)' == '' And '$(EmbedAssembliesIntoApk)' == 'True' And '$(DebugSymbols)' == 'True' And '$(Optimize)' == 'True'" >True</MonoSymbolArchive>
 	<MonoSymbolArchive Condition=" '$(MonoSymbolArchive)' == '' ">False</MonoSymbolArchive>
 
 	<BundleAssemblies Condition="'$(BundleAssemblies)' == ''">False</BundleAssemblies>
@@ -402,7 +402,7 @@ Copyright (C) 2011-2012 Xamarin. All rights reserved.
 		Value="AndroidKeyStore=True;AndroidSigningKeyStore=$([System.IO.Path]::GetFullPath ('$(AndroidSigningKeyStore)'));AndroidSigningStorePass=$(AndroidSigningStorePass);AndroidSigningKeyAlias=$(AndroidSigningKeyAlias);AndroidSigningKeyPass=$(AndroidSigningKeyPass)">
 		<Output TaskParameter="Value" PropertyName="_AdditionaEmbeddedWearAppProperties" />
 	</CreateProperty>
-	<MSBuild Projects="@(_AppExtensionReference)" Properties="Configuration=$(Configuration);AndroidUseSharedRuntime=False;EmbedAssembliesIntoApk=True;$(_AdditionaEmbeddedWearAppProperties)" Targets="Build;SignAndroidPackage"/>
+	<MSBuild Projects="@(_AppExtensionReference)" Properties="Configuration=$(Configuration);EmbedAssembliesIntoApk=True;$(_AdditionaEmbeddedWearAppProperties)" Targets="Build;SignAndroidPackage"/>
 	<CreateProperty
 		Condition="$(BundledWearApplicationApkPath) == '' And ($(WearAppTarget) == 'SignAndroidPackage' Or !Exists('%(_AppExtensionReference.RootDir)%(_AppExtensionReference.Directory)$(_AndroidDebugKeyStoreFlag)'))"
 		Value="%(_AppExtensionReference.RootDir)%(_AppExtensionReference.Directory)bin\$(Configuration)\$(BundledWearApplicationPackageName)-Signed.apk">
@@ -896,7 +896,6 @@ because xbuild doesn't support framework reference assemblies.
 		<_PropertyCacheItems Include="AndroidDexTool=$(AndroidDexTool)" />
 		<_PropertyCacheItems Include="AndroidLinkTool=$(AndroidLinkTool)" />
 		<_PropertyCacheItems Include="AndroidPackageFormat=$(AndroidPackageFormat)" />
-		<_PropertyCacheItems Include="UseSharedRuntime=$(AndroidUseSharedRuntime)" />
 		<_PropertyCacheItems Include="EmbedAssembliesIntoApk=$(EmbedAssembliesIntoApk)" />
 		<_PropertyCacheItems Include="AndroidLinkMode=$(AndroidLinkMode)" />
 		<_PropertyCacheItems Include="AndroidLinkSkip=$(AndroidLinkSkip)" />
@@ -1323,24 +1322,14 @@ because xbuild doesn't support framework reference assemblies.
 		DependsOnTargets="_CollectRuntimeJarFilenames;$(_BeforeAddStaticResources);_GetMonoPlatformJarPath">
 	<CopyResource ResourceName="machine.config" OutputPath="$(MonoAndroidIntermediateAssemblyDir)machine.config" />
   <CopyResource
-      Condition=" '$(AndroidUseSharedRuntime)' != 'True' And '$(_AndroidApiLevel)' &gt;= '21' "
+      Condition=" '$(_AndroidApiLevel)' &gt;= '21' "
       ResourceName="MonoRuntimeProvider.Bundled.java"
       OutputPath="$(_AndroidIntermediateJavaSourceDirectory)mono\MonoRuntimeProvider.java"
   />
   <CopyResource
-      Condition=" '$(AndroidUseSharedRuntime)' != 'True' And '$(_AndroidApiLevel)' &lt; '21' "
+      Condition=" '$(_AndroidApiLevel)' &lt; '21' "
       ResourceName="MonoRuntimeProvider.Bundled.20.java"
       OutputPath="$(_AndroidIntermediateJavaSourceDirectory)mono\MonoRuntimeProvider.java"
-  />
-  <CopyResource
-      Condition=" '$(AndroidUseSharedRuntime)' == 'True' And '$(_AndroidApiLevel)' &gt;= '21' "
-      ResourceName="MonoRuntimeProvider.Shared.java"
-      OutputPath="$(_AndroidIntermediateJavaSourceDirectory)mono\MonoRuntimeProvider.java"
-  />
-  <CopyResource
-      ResourceName="MonoRuntimeProvider.Shared.20.java"
-      OutputPath="$(_AndroidIntermediateJavaSourceDirectory)mono\MonoRuntimeProvider.java"
-      Condition=" '$(AndroidUseSharedRuntime)' == 'True' And '$(_AndroidApiLevel)' &lt; '21' "
   />
 
   <Copy
