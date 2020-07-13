@@ -88,7 +88,6 @@ namespace Xamarin.Android.Tasks {
 		public bool MultiDex { get; set; }
 		public bool NeedsInternet { get; set; }
 		public bool InstantRunEnabled { get; set; }
-		public bool UseSharedRuntime { get; set; }
 		public string VersionCode {
 			get {
 				XAttribute attr = doc.Root.Attribute (androidNs + "versionCode");
